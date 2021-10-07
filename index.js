@@ -5,6 +5,8 @@ const path = require('path')
 const dotenv = require('dotenv')
 dotenv.config()
 
+let PlayerCount = require('./server/players');
+
 const client = new DiscordJS.Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -32,8 +34,16 @@ client.on('ready', () => {
             hidden: true,
         }
     ])
-
-    console.log('Loaded')
 })
+
+client.on('ready', () => {
+    console.log(`Logged in as ${client.user.tag}!`);
+      
+      setInterval(() => {
+        PlayerCount.getPlayerCount().then((result) => {
+            client.user.setActivity(`with ${result.data.response.player_count} players | -help`,{ type: 'PLAYING' });
+        })
+      }, 10000);
+  });
 
 client.login(process.env.TOKEN)
