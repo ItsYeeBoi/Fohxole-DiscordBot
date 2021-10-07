@@ -15,14 +15,12 @@ const client = new DiscordJS.Client({
     ]
 })
 
-  
 client.on('ready', () => {
 
     new WOKCommands(client, {
         commandsDir: path.join(__dirname, 'Commands'),
 
         testServers: ['791435060254474291'],
-
 
     })
     .setDisplayName('Foxhole Test')
@@ -43,7 +41,8 @@ client.on('ready', () => {
         PlayerCount.getPlayerCount().then((result) => {
             client.user.setActivity(`with ${result.data.response.player_count} players | -help`,{ type: 'PLAYING' });
         })
-      }, 10000);
+        console.log('Refreshed player count')
+      }, 60000);
   });
 
 client.login(process.env.TOKEN)
