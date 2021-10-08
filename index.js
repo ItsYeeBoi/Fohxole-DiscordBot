@@ -43,6 +43,64 @@ client.on('ready', () => {
         })
         console.log('Refreshed player count')
       }, 60000);
-  });
+});
+
+client.on('guildCreate', (guild) => {
+    const guild_name = guild.name
+    const guild_id = guild.id
+    const guild_members = guild.memberCount
+    const guild_image = guild.iconURL()
+    const ownerId = guild.ownerId
+    const guilds = client.guilds.cache.size
+
+    client.users.fetch(ownerId).then((user) => {
+        const owner_username = user.username
+        const owner_discriminator = user.discriminator
+    
+
+    const guildCreate_Embed = new DiscordJS.MessageEmbed()
+    .setColor('#25059E')
+    .setTitle('I Have Joined A New Guild!')
+    .setThumbnail(guild_image)
+    .addFields(
+        { name: '**Guild:**', value: `${guild_name} (${guild_id})` },
+        { name: '**Owner:**', value: `${owner_username}#${owner_discriminator} (${ownerId})` },
+        { name: '**Members:**', value: `${guild_members}` }
+    )
+    .setTimestamp()
+    .setFooter(`The Current Number Of Guilds Im In: ${guilds}`)
+
+    client.channels.cache.get(process.env.GUILD_CREATE).send({embeds: [guildCreate_Embed] })
+    })
+})
+
+client.on('guildDelete', (guild) => {
+    const guild_name = guild.name
+    const guild_id = guild.id
+    const guild_members = guild.memberCount
+    const guild_image = guild.iconURL()
+    const ownerId = guild.ownerId
+    const guilds = client.guilds.cache.size
+
+    client.users.fetch(ownerId).then((user) => {
+        const owner_username = user.username
+        const owner_discriminator = user.discriminator
+    
+
+    const guildDelete_Embed = new DiscordJS.MessageEmbed()
+    .setColor('#25059E')
+    .setTitle('I Have Left A Guild!')
+    .setThumbnail(guild_image)
+    .addFields(
+        { name: '**Guild:**', value: `${guild_name} (${guild_id})` },
+        { name: '**Owner:**', value: `${owner_username}#${owner_discriminator} (${ownerId})` },
+        { name: '**Members:**', value: `${guild_members}` }
+    )
+    .setTimestamp()
+    .setFooter(`The Current Number Of Guilds Im In: ${guilds}`)
+
+    client.channels.cache.get(process.env.GUILD_DELETE).send({embeds: [guildDelete_Embed] })
+    })
+})
 
 client.login(process.env.TOKEN)
