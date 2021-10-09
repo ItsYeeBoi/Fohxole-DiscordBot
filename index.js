@@ -20,7 +20,7 @@ client.on('ready', () => {
     new WOKCommands(client, {
         commandsDir: path.join(__dirname, 'Commands'),
 
-        testServers: ['791435060254474291'],
+        testServers: [process.env.TEST_SERVER],
 
     })
     .setDisplayName('Foxhole Test')
