@@ -4,7 +4,7 @@ module.exports = {
     category: 'Testing',
     description: 'API Test',
 
-    callback: ({ message, client }) => {
+    callback: ({ client, channel }) => {
 
         const days = let = Math.floor(client.uptime / 86400000)
         const hours = let = Math.floor(client.uptime / 3600000) % 24
@@ -16,13 +16,13 @@ module.exports = {
         const statsEmbed = new MessageEmbed()
 
         .setColor('#0099ff')
-        .setTitle('Test')
-        .setDescription('Test2')
+        .setTitle('Foxhole Bot Stats')
+        .setDescription('Stats Listed Below')
         .addFields(
             { name: `**Version:** \`${version}\``,
               value: `**Days:** \`${days}\`\n**Hours:** \`${hours}\`\n**Minutes:** \`${minutes}\`\n**Seconds:** \`${seconds}\`\n**Guilds:** \`${client.guilds.cache.size}\`\n**Members:** \`${members}\`` }
         )
 
-        message.channel.send({ embeds: [statsEmbed] })
+        channel.send({ embeds: [statsEmbed] })
     }
 }
