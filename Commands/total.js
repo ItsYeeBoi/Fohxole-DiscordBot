@@ -257,8 +257,9 @@ module.exports = {
                                                                                                                                                             .setTitle(`Total Enlistments And Casualties`)
                                                                                                                                                             .setDescription('This Is Data For Shard 1')
                                                                                                                                                             .addFields(
-                                                                                                                                                                { name: `Returned Values:`, value: `Total Enlistments: \`${total_Enlistments}\`\nTotal Colonial Casualties: \`${total_colonialCasualties}\`\nTotal Warden Casualties: \`${total_wardenCasualties}\`` }
+                                                                                                                                                                { name: `Returned Values`, value: `Total Enlistments: \`${total_Enlistments}\`\nTotal Colonial Casualties: \`${total_colonialCasualties}\`\nTotal Warden Casualties: \`${total_wardenCasualties}\`` }
                                                                                                                                                             )
+                                                                                                                                                            .setTimestamp()
 
                                                                                                                                                             channel.send({ embeds: [ValuesEmbed] })
                                                                                                                                                                 
@@ -301,9 +302,9 @@ module.exports = {
                     })
                 })
             })
-        })
-        .catch((err) => {
-            console.log('Total ERR:', err)
+            .catch((err) => {
+                console.log('Total ERR:', err)
+            })
         })
     }
 }

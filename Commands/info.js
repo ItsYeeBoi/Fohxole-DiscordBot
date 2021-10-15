@@ -69,7 +69,7 @@ module.exports = {
                 .setDescription('All Information On The Current War')
                 .addFields(
                     { name: `Shard 1`, value: `WarId: \`${warId}\`\nWar Number: \`${warNumber}\`\nVictory Towns Required: \`${victoryTowns}\`\nWinner: \`${winner}\`\n\nStart Time: \`${startTime}\`\nResistance Start Time: \`${resistanceStartTime}\`\nEnd Time: \`${endTime}\``, inline: true },
-                    { name: 'Shard 2', value: `WarId: \`${warId2}\`\nWar Number: \`${warNumber2}\`\nVictory Towns Required: \`${victoryTowns2}\`\nWinner: \`${winner2}\`\n\nStart Time2: \`${startTime2}\`\nResistance Start Time: \`${resistanceStartTime2}\`\nEnd Time: \`${endTime2}\``, inline: true },
+                    { name: 'Shard 2', value: `WarId: \`${warId2}\`\nWar Number: \`${warNumber2}\`\nVictory Towns Required: \`${victoryTowns2}\`\nWinner: \`${winner2}\`\n\nStart Time: \`${startTime2}\`\nResistance Start Time: \`${resistanceStartTime2}\`\nEnd Time: \`${endTime2}\``, inline: true },
                 )
                 .setTimestamp()
                     channel.send({ embeds: [infoEmbed] }) 

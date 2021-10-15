@@ -30,6 +30,7 @@ module.exports = {
             { name: 'Maps', value: `${maps[0]}\n ${maps[2]}\n ${maps[4]}\n ${maps[6]}\n ${maps[8]}\n ${maps[10]}\n ${maps[12]}\n ${maps[14]}\n ${maps[16]}\n ${maps[20]}\n ${maps[22]}\n ${maps[24]}\n ${maps[26]}\n ${maps[28]}\n ${maps[30]}\n ${maps[32]}\n ${maps[34]}\n ${maps[36]}`, inline: true },
             { name: 'Maps', value: `${maps[1]}\n ${maps[3]}\n ${maps[5]}\n ${maps[7]}\n ${maps[9]}\n ${maps[11]}\n ${maps[13]}\n ${maps[15]}\n ${maps[17]}\n ${maps[19]}\n ${maps[21]}\n ${maps[23]}\n ${maps[25]}\n ${maps[27]}\n ${maps[29]}\n ${maps[31]}\n ${maps[33]}\n ${maps[35]}`, inline: true }
         )
+        .setTimestamp()
 
         channel.send({ embeds: [mapsEmbed] })
 
