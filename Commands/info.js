@@ -5,7 +5,21 @@ module.exports = {
     category: 'Testing',
     description: 'API Test',
 
-    callback: ({ channel }) => {
+    callback: ({ channel, message, client }) => {
+        const author_tag = message.author.tag
+        const author_id = message.author.id
+
+        console.log(`${author_tag} (${author_id}) Used The Command -info`)
+        const InfoCommand_Embed = new MessageEmbed()
+        .setColor('#25059E')
+        .setTitle(`The Command (-info) was used`)
+        .setThumbnail()
+        .addFields(
+            { name: 'The Command Was Used By', value: `${author_tag} (${author_id})` },
+        )
+        .setTimestamp()
+
+        client.channels.cache.get(process.env.COMMAND_LOGGER).send({embeds: [InfoCommand_Embed] })
         
         axios.get('https://war-service-live.foxholeservices.com/api/worldconquest/war')
         .then((res) => {
@@ -54,9 +68,10 @@ module.exports = {
                 .setTitle(`War Info`)
                 .setDescription('All Information On The Current War')
                 .addFields(
-                    { name: `Shard 1`, value: `WarId: ${warId}\nWar Number: ${warNumber}\nVictory Towns Required: ${victoryTowns}\nWinner: ${winner}\n\nStart Time: ${startTime}\nResistance Start Time: ${resistanceStartTime}\nEnd Time: ${endTime}`, inline: true },
-                    { name: 'Shard 2', value: `WarId: ${warId2}\nWar Number: ${warNumber2}\nVictory Towns Required: ${victoryTowns2}\nWinner: ${winner2}\n\nStart Time2: ${startTime2}\nResistance Start Time: ${resistanceStartTime2}\nEnd Time: ${endTime2}`, inline: true },
+                    { name: `Shard 1`, value: `WarId: \`${warId}\`\nWar Number: \`${warNumber}\`\nVictory Towns Required: \`${victoryTowns}\`\nWinner: \`${winner}\`\n\nStart Time: \`${startTime}\`\nResistance Start Time: \`${resistanceStartTime}\`\nEnd Time: \`${endTime}\``, inline: true },
+                    { name: 'Shard 2', value: `WarId: \`${warId2}\`\nWar Number: \`${warNumber2}\`\nVictory Towns Required: \`${victoryTowns2}\`\nWinner: \`${winner2}\`\n\nStart Time2: \`${startTime2}\`\nResistance Start Time: \`${resistanceStartTime2}\`\nEnd Time: \`${endTime2}\``, inline: true },
                 )
+                .setTimestamp()
                     channel.send({ embeds: [infoEmbed] }) 
             })
             .catch((err) => {

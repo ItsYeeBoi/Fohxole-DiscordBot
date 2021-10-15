@@ -4,7 +4,21 @@ module.exports = {
     category: 'Testing',
     description: 'API Test',
 
-    callback: ({ client, channel }) => {
+    callback: ({ client, channel, message }) => {
+        const author_tag = message.author.tag
+        const author_id = message.author.id
+
+        console.log(`${author_tag} (${author_id}) Used The Command -stats`)
+        const StatsCommand_Embed = new MessageEmbed()
+        .setColor('#25059E')
+        .setTitle(`The Command (-stats) was used`)
+        .setThumbnail()
+        .addFields(
+            { name: 'The Command Was Used By', value: `${author_tag} (${author_id})` },
+        )
+        .setTimestamp()
+
+        client.channels.cache.get(process.env.COMMAND_LOGGER).send({embeds: [StatsCommand_Embed] })
 
         const days = let = Math.floor(client.uptime / 86400000)
         const hours = let = Math.floor(client.uptime / 3600000) % 24
@@ -22,6 +36,7 @@ module.exports = {
             { name: `**Version:** \`${version}\``,
               value: `**Days:** \`${days}\`\n**Hours:** \`${hours}\`\n**Minutes:** \`${minutes}\`\n**Seconds:** \`${seconds}\`\n**Guilds:** \`${client.guilds.cache.size}\`\n**Members:** \`${members}\`` }
         )
+        .setTimestamp()
 
         channel.send({ embeds: [statsEmbed] })
     }

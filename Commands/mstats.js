@@ -5,7 +5,21 @@ module.exports = {
     category: 'Testing',
     description: 'API Test',
 
-    callback: ({ args, channel }) => {
+    callback: ({ args, channel, message, client }) => {
+        const author_tag = message.author.tag
+        const author_id = message.author.id
+
+        console.log(`${author_tag} (${author_id}) Used The Command -mstats`)
+        const MstatsCommand_Embed = new MessageEmbed()
+        .setColor('#25059E')
+        .setTitle(`The Command (-mstats) was used`)
+        .setThumbnail()
+        .addFields(
+            { name: 'The Command Was Used By', value: `${author_tag} (${author_id})` },
+        )
+        .setTimestamp()
+
+        client.channels.cache.get(process.env.COMMAND_LOGGER).send({embeds: [MstatsCommand_Embed] })
 
         const listen = args[0]
 
@@ -14,27 +28,28 @@ module.exports = {
             .then((res) => {
                 axios.get(`https://war-service-live-2.foxholeservices.com/api/worldconquest/warReport/${listen}`)
                 .then((res2) => {
-                    const fetch1 = res.data.totalEnlistments
-                    const fetch2 = res.data.colonialCasualties
-                    const fetch3 = res.data.wardenCasualties
+                    const shard1_Enlistments = res.data.totalEnlistments
+                    const shard1_colonialCasualties = res.data.colonialCasualties
+                    const shard1_wardenCasualties = res.data.wardenCasualties
 
-                    const fetch11 = res2.data.totalEnlistments
-                    const fetch22 = res2.data.colonialCasualties
-                    const fetch33 = res2.data.wardenCasualties
+                    const shard2_Enlistments = res2.data.totalEnlistments
+                    const shard2_colonialCasualties = res2.data.colonialCasualties
+                    const shard2_wardenCasualties = res2.data.wardenCasualties
 
-                    const total_Enlistments = fetch1 + fetch11
-                    const total_colonial_casuallties = fetch2 + fetch22
-                    const total_warden_casuallties = fetch3 + fetch33
+                    const total_Enlistments = shard1_Enlistments + shard2_Enlistments
+                    const total_colonialcasuallties = shard1_colonialCasualties + shard2_colonialCasualties
+                    const total_wardencasuallties = shard1_wardenCasualties + shard2_wardenCasualties
 
                     const MarbanHollowEmbed = new MessageEmbed()
                     .setColor('#0099ff')
                     .setTitle(`Data On ${listen}`)
                     .setDescription('This Is Data Across Both Shards')
                     .addFields(
-                        { name: 'Shard 1', value: `Enlistments: ${fetch1}\nColonial Casuallties: ${fetch2}\nWarden Casualties: ${fetch3}`, inline: true },
-                        { name: 'Shard 2', value: `Enlistments: ${fetch11}\nColonial Casuallties: ${fetch22}\nWarden Casualties: ${fetch33}`, inline: true },
-                        { name: 'Total', value: `Enlistments: ${total_Enlistments}\nColonial Casuallties: ${total_colonial_casuallties}\nWarden Casualties: ${total_warden_casuallties}`, inline: false },
+                        { name: 'Shard 1', value: `Enlistments: \`${shard1_Enlistments}\`\nColonial Casuallties: \`${shard1_colonialCasualties}\`\nWarden Casualties: \`${shard1_wardenCasualties}\``, inline: true },
+                        { name: 'Shard 2', value: `Enlistments: \`${shard2_Enlistments}\`\nColonial Casuallties: \`${shard2_colonialCasualties}\`\nWarden Casualties: \`${shard2_wardenCasualties}\``, inline: true },
+                        { name: 'Total', value: `Enlistments: \`${total_Enlistments}\`\nColonial Casuallties: \`${total_colonialcasuallties}\`\nWarden Casualties: \`${total_wardencasuallties}\``, inline: false },
                     )
+                    .setTimestamp()
                         channel.send({ embeds: [MarbanHollowEmbed] })   
                 })
                 .catch((err) => {
@@ -51,27 +66,28 @@ module.exports = {
             .then((res) => {
                 axios.get(`https://war-service-live-2.foxholeservices.com/api/worldconquest/warReport/${listen}Hex`)
                 .then((res2) => {
-                    const fetch1 = res.data.totalEnlistments
-                    const fetch2 = res.data.colonialCasualties
-                    const fetch3 = res.data.wardenCasualties
+                    const shard1_Enlistments = res.data.totalEnlistments
+                    const shard1_colonialCasualties = res.data.colonialCasualties
+                    const shard1_wardenCasualties = res.data.wardenCasualties
 
-                    const fetch11 = res2.data.totalEnlistments
-                    const fetch22 = res2.data.colonialCasualties
-                    const fetch33 = res2.data.wardenCasualties
+                    const shard2_Enlistments = res2.data.totalEnlistments
+                    const shard2_colonialCasualties = res2.data.colonialCasualties
+                    const shard2_wardenCasualties = res2.data.wardenCasualties
 
-                    const total_Enlistments = fetch1 + fetch11
-                    const total_colonial_casuallties = fetch2 + fetch22
-                    const total_warden_casuallties = fetch3 + fetch33
+                    const total_Enlistments = shard1_Enlistments + shard2_Enlistments
+                    const total_colonialcasuallties = shard1_colonialCasualties + shard2_colonialCasualties
+                    const total_wardencasuallties = shard1_wardenCasualties + shard2_wardenCasualties
                     
                     const NotMarbanHollowEmbed = new MessageEmbed()
                     .setColor('#0099ff')
                     .setTitle(`Data On ${listen}`)
                     .setDescription('This Is Data Across Both Shards')
                     .addFields(
-                        { name: 'Shard 1', value: `Enlistments: ${fetch1}\nColonial Casuallties: ${fetch2}\nWarden Casualties: ${fetch3}`, inline: true },
-                        { name: 'Shard 2', value: `Enlistments: ${fetch11}\nColonial Casuallties: ${fetch22}\nWarden Casualties: ${fetch33}`, inline: true },
-                        { name: 'Total', value: `Enlistments: ${total_Enlistments}\nColonial Casuallties: ${total_colonial_casuallties}\nWarden Casualties: ${total_warden_casuallties}`, inline: false },
+                        { name: 'Shard 1', value: `Enlistments: \`${shard1_Enlistments}\`\nColonial Casuallties: \`${shard1_colonialCasualties}\`\nWarden Casualties: \`${shard1_wardenCasualties}\``, inline: true },
+                        { name: 'Shard 2', value: `Enlistments: \`${shard2_Enlistments}\`\nColonial Casuallties: \`${shard2_colonialCasualties}\`\nWarden Casualties: \`${shard2_wardenCasualties}\``, inline: true },
+                        { name: 'Total', value: `Enlistments: \`${total_Enlistments}\`\nColonial Casuallties: \`${total_colonialcasuallties}\`\nWarden Casualties: \`${total_wardencasuallties}\``, inline: false },
                     )
+                    .setTimestamp()
                         channel.send({ embeds: [NotMarbanHollowEmbed] })   
                 })
                 .catch((err) => {

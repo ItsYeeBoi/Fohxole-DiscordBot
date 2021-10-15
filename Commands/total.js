@@ -5,7 +5,22 @@ module.exports = {
     category: 'Testing',
     description: 'API Test',
 
-    callback: ({ channel }) => {
+    callback: ({ channel, message, client }) => {
+        const author_tag = message.author.tag
+        const author_id = message.author.id
+
+        console.log(`${author_tag} (${author_id}) Used The Command -total`)
+        const TotalCommand_Embed = new MessageEmbed()
+        .setColor('#25059E')
+        .setTitle(`The Command (-total) was used`)
+        .setThumbnail()
+        .addFields(
+            { name: 'The Command Was Used By', value: `${author_tag} (${author_id})` },
+        )
+        .setTimestamp()
+
+        client.channels.cache.get(process.env.COMMAND_LOGGER).send({embeds: [TotalCommand_Embed] })
+
         const maps = ["Acrithia", "AllodsBight", "AshFields", "BasinSionnach", "CallahansPassage", "CallumsCape", "ClansheadValley", "DeadLands", "DrownedVale", "EndlessShore", "FarranacCoast", "FishermansRow", "Godcrofts", "GreatMarch", "Heartlands", "HowlCounty", "Kalokai", "LinnMercy", "LochMor", "MarbanHollow", "MooringCounty", "MorgensCrossing", "NevishLine", "Oarbreaker", "Origin", "ReachingTrail", "RedRiver", "ShackledChasm", "SpeakingWoods", "Stonecradle", "TempestIsland", "Terminus", "TheFingers", "UmbralWildwood", "ViperPit", "WeatheredExpanse", "Westgate"]
 
         channel.send('Getting The Values...').then((resultMessage) => {
